@@ -1,0 +1,9 @@
+# Snakemake pipeline for bulk data
+rule enrichment_resistance:
+    input:
+        deg_path = "data/input/OV_recur_DESeq.txt",
+        gmt_path = "data/signature_sets/resistance_signatures.gmt"
+    output:
+        output_plot = "results/fgsea_resistance_plot.pdf"
+    script:
+        "run_enrichment_and_plot.R"

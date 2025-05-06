@@ -1,7 +1,6 @@
 
-project_root <- normalizePath(file.path(dirname(sys.frame(1)$ofile), "..", ".."))
-source(file.path(project_root, "scan_scn", "bulk", "enrichment_fgsea.R"))
-source(file.path(project_root, "scan_scn", "bulk", "enrichment_plotting.R"))
+source("scan_scn/bulk/enrichment_fgsea.R")
+source("scan_scn/bulk/enrichment_plotting.R")
 
 run_enrichment_and_plot <- function(deg_path, gmt_path, output_plot, w = 9, h = 5) {
   suppressPackageStartupMessages({
@@ -32,9 +31,9 @@ if (interactive() || identical(Sys.getenv("R_SCRIPT_DEBUG"), "TRUE")) {
     output_plot = "results/fgsea_resistance_plot.pdf"
   )
 } else {
-  args <- commandArgs(trailingOnly = TRUE)
-  if (length(args) < 3) {
-    stop("Usage: Rscript enrichment.R <DEG_table> <geneset_gmt> <output_plot>")
-  }
-  run_enrichment_and_plot(args[1], args[2], args[3])
+  deg_path <- snakemake@input[[1]]
+  gmt_path <- snakemake@input[[2]]
+  output_plot <- snakemake@output[[1]]
+
+  run_enrichment_and_plot(deg_path, gmt_path, output_plot)
 }
