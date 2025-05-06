@@ -1,6 +1,5 @@
-# fgsea_plotting.R
 
-#' Barplot of NES for top/bottom enriched pathways
+#' Barplot of NES for enriched pathways
 plot_fgsea_bar <- function(fgsea_df, topn = 25, bottomn = 25, sort.val = NULL, title = "GSEA Enrichment") {
   fgsea_df_top <- fgsea_df[c(tail(order(fgsea_df$NES), topn), head(order(fgsea_df$NES), bottomn)), ]
   fgsea_df_top$logp <- abs(fgsea_df_top$signed_logp)

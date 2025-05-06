@@ -2,7 +2,7 @@
 rule enrichment_resistance:
     input:
         deg_path = "data/input/OV_recur_DESeq.txt",
-        gmt_path = "data/resources/resistance_signatures.gmt"
+        gmt_path = "data/internal/resistance_signatures.gmt"
     output:
         output_plot = "res/fgsea_resistance_plot.pdf"
     script:
