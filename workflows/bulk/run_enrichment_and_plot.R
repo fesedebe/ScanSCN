@@ -27,8 +27,8 @@ run_enrichment_and_plot <- function(deg_path, gmt_path, output_plot, w = 9, h = 
 if (interactive() || identical(Sys.getenv("R_SCRIPT_DEBUG"), "TRUE")) {
   run_enrichment_and_plot(
     deg_path = "data/input/OV_recur_DESeq.txt",
-    gmt_path = "data/signature_sets/resistance_signatures.gmt",
-    output_plot = "results/fgsea_resistance_plot.pdf"
+    gmt_path = "data/resources/resistance_signatures.gmt",
+    output_plot = "res/fgsea_resistance_plot.pdf"
   )
 } else {
   deg_path <- snakemake@input[[1]]
