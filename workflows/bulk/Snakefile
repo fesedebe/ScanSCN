@@ -1,4 +1,9 @@
 # Snakemake pipeline for bulk data
+rule all:
+    input:
+        "res/fgsea_resistance_plot.pdf",
+        "res/SCN_projection_boxplot.pdf",
+
 rule enrichment_resistance:
     input:
         deg_path = "data/input/OV_recur_DESeq.txt",
@@ -7,3 +12,20 @@ rule enrichment_resistance:
         output_plot = "res/fgsea_resistance_plot.pdf"
     script:
         "run_enrichment_and_plot.R"
+
+rule scn_projection:
+    input:
+        query = "data/input/OV_log2UQ.txt",
+    output:
+        scores = "data/output/UCLA_projected_onto_SCN_PCA_predicted.scores.txt"
+    script:
+        "run_scn_projection.py"
+
+rule plot_scn_scores:
+    input:
+       #scores = rules.scn_projection.output.scores
+       scores = "data/input/OV_SCNscores.txt"
+    output:
+        fig = "res/SCN_projection_boxplot.pdf"
+    script:
+        "run_plot_scn_scores.R"
