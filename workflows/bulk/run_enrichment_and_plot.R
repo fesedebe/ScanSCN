@@ -1,4 +1,3 @@
-
 source("scan_scn/bulk/enrichment/enrichment_fgsea.R")
 source("scan_scn/bulk/visualization/enrichment_plotting.R")
 
@@ -14,13 +13,13 @@ run_enrichment_and_plot <- function(deg_path, gmt_path, output_plot, w = 9, h = 
   resis_genesets <- fgsea::gmtPathways(gmt_path)
   deg_df <- data.table::fread(deg_path)
 
-  res <- enrichment_fgsea::run_fgsea(
+  res <- run_fgsea(
     pathways = resis_genesets,
     deg_df = deg_df,
     deg_df_slpval = "sign_log_p"
   )
 
-  plot <- enrichment_plotting::plot_fgsea_bar(res, title = "Enrichment of Resistant Pathways")
+  plot <- plot_fgsea_bar(res, title = "Enrichment of Resistant Pathways")
   ggsave(output_plot, plot = plot, device = "pdf", width = w, height = h)
 }
 
