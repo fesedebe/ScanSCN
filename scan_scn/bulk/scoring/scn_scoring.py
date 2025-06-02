@@ -15,11 +15,16 @@ ALTERNATE_CSV_PATH = Path("data/internal/balanisSCN_log2UQ.csv.gz")
 
 def load_default_scn(path: Path = DEFAULT_SCN_PATH) -> pd.DataFrame:
     if path.suffix == ".parquet":
-        return pd.read_parquet(path)
+        df = pd.read_parquet(path)
     elif path.suffix in [".csv", ".gz"]:
-        return pd.read_csv(path, index_col=0)
+        df = pd.read_csv(path, index_col=0)
     else:
         raise ValueError(f"Unsupported file format for: {path}")
+    
+    if "gene" in df.columns:
+        df = df.set_index("gene")
+    
+    return df
 
 def match_genes(scn_df: pd.DataFrame, query_df: pd.DataFrame) -> tuple:
     common = scn_df.index.intersection(query_df.index)
