@@ -1,4 +1,3 @@
-#!/usr/bin/env Rscript
 
 suppressPackageStartupMessages({
   library(ggplot2)
@@ -7,17 +6,12 @@ suppressPackageStartupMessages({
   source("scan_scn/bulk/visualization/plot_paired_boxplot.R")
 })
 
-# ---- Main block ----
-if (interactive() || identical(Sys.getenv("R_SCRIPT_DEBUG"), "TRUE") || !interactive()) {
-  
-  # Load test data
-  df <- read.csv("data/input/OV_SCNscores.txt", sep = "\t", header = TRUE)
+run_plot_scn_scores <- function(scores_path, output_plot, w = 6, h = 5) {
+  df <- read.csv(scores_path, sep = "\t", header = TRUE)
 
-  # Optional: ensure correct column types
   df$Treatment_Status <- as.factor(df$Treatment_Status)
   df$Dataset <- as.factor(df$Dataset)
 
-  # Call plot function
   p <- create_paired_boxplot(
     data = df,
     x = "Treatment_Status",
@@ -27,7 +21,18 @@ if (interactive() || identical(Sys.getenv("R_SCRIPT_DEBUG"), "TRUE") || !interac
     facet_by = "Dataset"
   )
 
-  # Save the plot
-  ggsave("res/test_scn_score_plot.pdf", p, width = 6, height = 5)
-  message("Plot saved to res/test_scn_score_plot.pdf")
+  ggsave(output_plot, plot = p, width = w, height = h)
+  message(paste("Plot saved to", output_plot))
+}
+
+# interactive or Snakemake
+if (interactive() || identical(Sys.getenv("R_SCRIPT_DEBUG"), "TRUE")) {
+  run_plot_scn_scores(
+    scores_path = "data/input/OV_SCNscores.txt",
+    output_plot = "res/test_scn_score_plot.pdf"
+  )
+} else {
+  scores_path <- snakemake@input[[1]]
+  output_plot <- snakemake@output[[1]]
+  run_plot_scn_scores(scores_path, output_plot)
 }
