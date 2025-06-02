@@ -1,1 +1,13 @@
 # Snakemake pipeline for single-cell data
+rule all:
+    input:
+        "res/ucla_qc_filtered.rds"
+
+rule qc_preprocessing:
+    input:
+        matrix_dir = "data/input/filtered_feature_bc_matrix",
+        aggr_csv = "data/internal/aggregation_1.csv"
+    output:
+        output = "res/ucla_qc_filtered.rds"
+    script:
+        "run_qc.R"
