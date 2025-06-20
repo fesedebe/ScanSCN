@@ -19,3 +19,11 @@ rule normalize_and_integrate:
         "res/ucla_integrated.rds"
     script:
         "run_normalize_and_integrate.R"
+
+rule cluster_and_score:
+    input:
+        "res/ucla_integrated.rds"
+    output:
+        "res/ucla_clustered_scored.rds"
+    script:
+        "/run_cluster_and_score.R"
