@@ -11,3 +11,11 @@ rule qc_preprocessing:
         output = "res/ucla_qc_filtered.rds"
     script:
         "run_qc.R"
+
+rule normalize_and_integrate:
+    input:
+        "res/ucla_qc_filtered.rds"
+    output:
+        "res/ucla_integrated.rds"
+    script:
+        "run_normalize_and_integrate.R"
