@@ -1,7 +1,9 @@
 # Snakemake pipeline for single-cell data
 rule all:
     input:
-        "res/ucla_qc_filtered.rds"
+        "res/ucla_integrated.rds",
+        "res/ucla_clustered.rds",
+        "res/ucla_cluster_markers.tsv"
 
 rule qc_preprocessing:
     input:
@@ -20,10 +22,19 @@ rule normalize_and_integrate:
     script:
         "run_normalize_and_integrate.R"
 
-rule cluster_and_score:
+rule cluster_and_markers:
     input:
         "res/ucla_integrated.rds"
     output:
-        "res/ucla_clustered_scored.rds"
+        clustered = "res/ucla_clustered.rds",
+        markers = "res/ucla_cluster_markers.tsv"
     script:
-        "/run_cluster_and_score.R"
+        "run_cluster_and_markers.R"
+
+rule score_signatures:
+    input:
+        "res/ucla_clustered.rds"
+    output:
+        "res/ucla_clustered_with_signatures.rds"
+    script:
+        "run_score_signatures.R"
