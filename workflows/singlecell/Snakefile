@@ -38,3 +38,12 @@ rule score_signatures:
         "res/ucla_clustered_with_signatures.rds"
     script:
         "run_score_signatures.R"
+
+rule infer_pseudotime:
+    input:
+        "res/ucla_integrated.rds"
+    output:
+        rds = "res/ucla_monocle_pseudotime.rds",
+        plot = "res/ucla_monocle_pseudotime.pdf"
+    script:
+        "workflows/singlecell/run_infer_pseudotime.R"
