@@ -47,3 +47,13 @@ rule infer_pseudotime:
         plot = "res/ucla_monocle_pseudotime.pdf"
     script:
         "workflows/singlecell/run_infer_pseudotime.R"
+
+rule pseudobulk_feature_selection:
+    input:
+        "data/ucla.sobj.dx.filt.epi.pat.sct_ccr_integ.srpca_leidenclust_sigscores.rds"
+    output:
+        "res/scn_DE_results_thresh003.txt"
+    params:
+        threshold = 0.03
+    script:
+        "workflows/singlecell/run_pseudobulk_feature_selection.R"

@@ -6,7 +6,6 @@ suppressPackageStartupMessages({
   source("scan_scn/singlecell/scn_gene_importance/pseudobulk_feature_selection.R") # nolint
 })
 
-# ---- Wrapper Function ----
 run_pseudobulk_feature_selection <- function(seurat_path, output_path = NULL, threshold = 0.03) {
   sobj <- readRDS(seurat_path)
 
@@ -25,7 +24,6 @@ run_pseudobulk_feature_selection <- function(seurat_path, output_path = NULL, th
   message("Results written to: ", output_path)
 }
 
-# ---- Execution block ----
 if (interactive() || identical(Sys.getenv("R_SCRIPT_DEBUG"), "TRUE")) {
   run_pseudobulk_feature_selection(
     seurat_path = "data/ucla.sobj.dx.filt.epi.pat.sct_ccr_integ.srpca_leidenclust_sigscores.rds",
