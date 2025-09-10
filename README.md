@@ -2,7 +2,7 @@
 A predictive modeling pipeline to quantify rare tumor states and identify their actionable gene drivers
 
 ## Overview
-ertain aggressive cancers can shift into a small-cell neuroendocrine (SCN) state, which is highly resistant to therapy. Detecting these states in transcriptomic data is challenging: they are rare, heterogeneous, and defined by subtle transcriptional programs. ScanSCN provides a predictive modeling approach to quantify SCN states and identify the gene drivers underlying them. It takes in both bulk and single-cell RNA-seq data, producing:
+Tumors can shift into a small-cell neuroendocrine (SCN) state to escape therapy. Detecting these states in transcriptomic data can be challenging: they are rare, heterogeneous, and defined by subtle transcriptional programs. ScanSCN provides a predictive modeling approach to quantify SCN states and identify the gene drivers underlying them. It takes in both bulk and single-cell RNA-seq data, producing:
 
 - **SCN scores** → continuous values indicating how “SCN-like” a sample/subpopulation is.
 - **Gene driver rankings** → interpretable feature importance lists that highlight genes contributing most to SCN variability.
