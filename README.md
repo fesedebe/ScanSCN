@@ -1,21 +1,30 @@
 # ScanSCN
-
-**ScanSCN** is a toolkit for identifing and analyzing small cell neuroendocrine (SCN) molecular features in transcriptomics datasets. 
+A predictive modeling pipeline to quantify rare tumor states and identify their actionable gene drivers
 
 ## Overview
-It supports R, Python and Snakemake workflows for both bulk and single-cell RNA-seq data and is applicable across a range of cancer types.
+ertain aggressive cancers can shift into a small-cell neuroendocrine (SCN) state, which is highly resistant to therapy. Detecting these states in transcriptomic data is challenging: they are rare, heterogeneous, and defined by subtle transcriptional programs. ScanSCN provides a predictive modeling approach to quantify SCN states and identify the gene drivers underlying them. It takes in both bulk and single-cell RNA-seq data, producing:
+
+- **SCN scores** → continuous values indicating how “SCN-like” a sample/subpopulation is.
+- **Gene driver rankings** → interpretable feature importance lists that highlight genes contributing most to SCN variability.
 
 ## Features
+- Linear projection model: Applies PCA-derived gene weights from reference datasets to calculate SCN scores in new cohorts.
+- Single-cell workflow: Identifies candidate SCN subpopulations, aggregates pseudobulks, and applies predictive models (RF, XGBoost) to quantify SCN-ness.
+- Feature importance analysis: Extracts interpretable gene rankings (Gini/gain importance) as candidate biomarkers.
 
-### Bulk RNA-seq
-- **Signature Enrichment**: Enrichment against curated resistance gene sets
-- **SCN Scoring**: PCA projection of query expression onto SCN reference
-- **Similarity Assessment**: Compare DEGs, expression, and pathway trends vs known SCN profiles
+## Installation
+Clone and install:
 
-### Single-cell RNA-seq
-- **Preprocessing**: Mitochondrial filtering, doublet detection (scDblFinder), ambient RNA correction (DecontX)
-- **Normalization & Integration**: SCTransform with optional cell cycle regression, RPCA or Harmony integration
-- **Clustering & DE**: Leiden clustering, MAST-based marker identification
-- **Trajectory Analysis**: Monocle 3 pseudotime inference
-- **Signature Scoring**: AddModuleScore for SCN and other resistance signatures
-- **SCN Gene Prioritization**: Cell classification → pseudobulk aggregation → DE feature selection → Ensemble ML model training for feature importance ranking
+```bash
+git clone https://github.com/fesedebe/ScanSCN.git
+cd scan_scn
+pip install -e .
+```
+## Repo Structure
+```
+scan_scn/bulk                           # Signature Enrichment, SCN Scoring & Similarity Assessment
+scan_scn/singlecell/preprocessing       # Mitochondrial Filtering, Doublet Detection, Ambient RNA Correction
+scan_scn/singlecell/cell_state          # Normalization & Integration, Clustering & Marker ID, Trajectory Analysis
+scan_scn/singlecell/scn_gene_importance # Pseudobulk, Ensemble Modeling & Feature Importance for Gene Drivers
+workflows                               # Snakemake Workflows
+```
